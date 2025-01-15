@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  webservice:
+    image: rishabhgupta130/springboot-api-repo
+    container_name: springboot-api-container  
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+      - cache
+    networks:
+      - app-network
+
+  db:
+    image: rishabhgupta130/custompostgres-repo
+    container_name: postgres_container
+    ports:
+      - "5435:5432"
+    networks:
+      - app-network
+
+  cache:
+    image: rishabhgupta130/customredis-repo
+    container_name: redis_container
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+  
+networks:
+    app-network:
+      driver: bridge
